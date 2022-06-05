@@ -1,6 +1,7 @@
 const express = require('express');
 const ClubeController = require('../controllers/ClubeController');
 const AtletaController = require('../controllers/AtletaController');
+const CompeticaoController = require('../controllers/CompeticaoController');
 
 const routes = express.Router();
 
@@ -14,5 +15,13 @@ routes.delete('/clubes/:id', ClubeController.delete);
 routes.get('/atletas', AtletaController.index);
 routes.post('/atletas', AtletaController.store);
 
+//Rotas referentes a competiçao
+    //Rotas referentes ao CRUD de competicao
+    routes.get('/competicao', CompeticaoController.index);
+    routes.post('/competicao', CompeticaoController.store);
+    routes.put('/competicao/:id', CompeticaoController.update);
+    routes.delete('/competicao/:id', CompeticaoController.delete);
+    //Rotas referentes a exportacao do xlsx 
+    routes.get('/competicao/xlsx', CompeticaoController.gerarXLSX);
 
 module.exports = routes;

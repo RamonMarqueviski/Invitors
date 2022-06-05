@@ -25,7 +25,7 @@ module.exports = {
       return res.status(400).json({ error: 'Clube não encontrado!' });
     }
 
-    const atleta = await Atletas.create({  cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id });
+    const atleta = await Atletas.create({ cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id });
 
     return res.json(atleta);
 
