@@ -1,17 +1,12 @@
 const Sequelize = require('sequelize');
 
-const dbConfig = require('../config/database')
+// const dbConfig = require('../config/database')
 
 const Clube = require('../models/Clube');
 const Atleta = require('../models/Atleta');
 const Competicoes = require('../models/Competicao');
 
-const connection = new Sequelize(dbConfig);
-
-connection
-  .authenticate()
-  .then(() => console.log("Connection has been established successfully."))
-  .catch((err) => console.error("Unable to connect to the database:", err));
+const connection = new Sequelize(process.env.DATABASE_URL);
 
 Clube.init(connection);
 Atleta.init(connection);
