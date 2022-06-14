@@ -5,7 +5,20 @@ const Clube = require('../models/Clube');
 const Atleta = require('../models/Atleta');
 const Competicoes = require('../models/Competicao');
 
-const connection = new Sequelize(dbConfig);
+const connection = new Sequelize(process.env.DATA_URL,{
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  define: {
+    timestamps: true,
+    underscored: true,
+  }
+});
+
+connection
+  .authenticate()
+  .then(() => console.log("Connection has been established successfully."))
+  .catch((err) => console.error("Unable to connect to the database:", err));
 
 Clube.init(connection);
 Atleta.init(connection);
