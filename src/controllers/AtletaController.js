@@ -6,6 +6,12 @@ module.exports = {
 
     const { clube_id } = req.body;
 
+    if(!clube_id){
+      return res.status(400).json({
+        error: 'Falta parâmetro'
+      })
+    }
+
     const clube = await Clubes.findByPk(clube_id, {
       include: { association: 'atletas' }
     });
