@@ -14,7 +14,7 @@ module.exports = {
       res.status(400).json({ error: "Clube não encontrado"});
     }
 
-    res.json(clube.atletas);
+    res.json(clube);
   },
   async store(req, res) {
     const { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id } = req.body;
