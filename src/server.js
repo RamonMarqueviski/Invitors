@@ -11,6 +11,8 @@ app.use(express.json());
 
 app.use(routes);
 
+app.timeout = 100000;
+
 app.listen(port, function(){
   console.log("Servidor está rodando na porta: " + port);
 })
