@@ -29,5 +29,44 @@ module.exports = {
 
     return res.json(atleta);
 
+  },
+  async update(req, res) {
+    const { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id } = req.body;
+    const { id } = req.params;
+
+    const verificaClube = await Atletas.findByPk(clube_id);
+
+    if(!verificaAtleta){
+      return res.status(400).json({ error: 'Atleta não encontrado!' });
+    }
+
+    if(!verificaClube){
+      return res.status(400).json({ error: 'Clube não encontrado!' });
+    }
+
+    await Atletas.update(
+      { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id },
+      {where: {id: id}}
+    );
+
+    const retorno = await Atletas.findByPk(id);
+    return res.json(retorno);
+
+  },
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const atleta = await Atletas.findByPk(id);
+    if(!atleta){
+      res.status(400).json({error: "Atleta não encontrado"})
+    }
+
+    await Atletas.destroy({
+      where: {id: id},
+    })
+
+    res.json({retorno: "Atleta deletado com sucesso!"})
+
   }
+
 }

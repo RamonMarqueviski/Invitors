@@ -5,7 +5,21 @@ const Clube = require('../models/Clube');
 const Atleta = require('../models/Atleta');
 const Competicoes = require('../models/Competicao');
 
-const connection = new Sequelize(dbConfig);
+// console.log("ENV: " + );
+
+const connection = new Sequelize({
+  dialect: 'postgres',
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
+connection 
+  .authenticate()
+  .then(() => console.log("Deu boa a conexão"))
+  .catch((err) => console.log("Errouuuu a conexão : " + err))
+
 
 Clube.init(connection);
 Atleta.init(connection);

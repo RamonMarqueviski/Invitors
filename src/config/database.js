@@ -1,12 +1,14 @@
 module.exports = {
   dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: 'postgres',
-  database: 'inscricaobadminton',
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
   define: {
     timestamps: true,
     underscored: true,
   }
 
 }
+
