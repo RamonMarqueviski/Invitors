@@ -3,8 +3,12 @@ const Clubes = require('../models/Clube');
 module.exports = {
   async index(req, res){
     const clubes = await Clubes.findAll();
-
-    res.json(clubes);
+    if(!clubes){
+      res.status(400).json({error: 'Se fodeo'})
+    }else{
+      res.json(clubes);
+    }
+    
   },
   async store(req, res) {
     const { cnpj, sigla, nome, cidade } = req.body;
