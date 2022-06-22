@@ -5,9 +5,9 @@ module.exports = {
     
     const clubes = await Clubes.findAll();
     if(!clubes){
-      res.status(400).json({error: 'Se fodeo'})
+      return res.status(400).json({error: 'Se fodeo'})
     }else{
-      res.json(clubes);
+      return res.json(clubes);
     }
     
   },

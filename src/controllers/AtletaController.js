@@ -17,10 +17,10 @@ module.exports = {
     });
 
     if(!clube){
-      res.status(400).json({ error: "Clube não encontrado"});
+      return res.status(400).json({ error: "Clube não encontrado"});
     }
 
-    res.json(clube);
+    return res.send(clube.atletas);
   },
   async store(req, res) {
     const { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id } = req.body;
