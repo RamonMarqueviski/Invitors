@@ -10,39 +10,52 @@ module.exports = {
     }
   },
   async store(req, res) {
-    const { cnpj, sigla, nome, cidade } = req.body;
-
-    const clube = await Clubes.create({ cnpj, sigla, nome, cidade });
-
-    return res.json(clube);
+    //pega do body o nome, descricao, isDupla, idadeMax, idadeMin
+    const { nome, descricao, isDupla, idadeMax, idadeMin } = req.body;
+    //cria um novo objeto com os dados do body
+    const categoria = await Categorias.create({
+      nome,
+      descricao,
+      isDupla,
+      idadeMax,
+      idadeMin
+    });
+    //retorna o objeto criado
+    return res.json(categoria);
   },
   async update(req, res) {
-    const { cnpj, sigla, nome, cidade } = req.body;
+    //pega do body o nome, descricao, isDupla, idadeMax, idadeMin
+    const { nome, descricao, isDupla, idadeMax, idadeMin } = req.body;
+    //pega do params o id
     const { id } = req.params;
-
-    const verificaClube = await Clubes.findByPk(id);
-
-    if (!verificaClube) {
-      return res.status(400).json({ error: "Clube não encontrado!" });
+    //verifica se existe a categoria
+    const categoria = await Categorias.findByPk(id);
+    if (!categoria) {
+      return res.status(400).json({ error: "Categoria não encontrada" });
+    } else {
+      //atualiza o objeto
+      await Categorias.update(
+        { nome, descricao, isDupla, idadeMax, idadeMin },
+        { where: { id: id } }
+      );
+       const categoriaAtualizado = await Categorias.findByPk(id);
+      //retorna o objeto atualizado
+      return res.status(200).json(categoriaAtualizado);
     }
-
-    await Clubes.update({ cnpj, sigla, nome, cidade }, { where: { id: id } });
-
-    const retorno = await Clubes.findByPk(id);
-    return res.json(retorno);
   },
   async delete(req, res) {
+    //pega do params o id
     const { id } = req.params;
-
-    const clube = await Clubes.findByPk(id);
-    if (!clube) {
-      res.status(400).json({ error: "Clube não encontrado" });
+    //verifica se existe a categoria
+    const categoria = await Categorias.findByPk(id);
+    if (!categoria) {
+      return res.status(400).json({ error: "Categoria não encontrada" });
     }
-
-    await Clubes.destroy({
-      where: { id: id },
+    //deleta a categoria
+    await Categorias.destroy({
+      where: { id: id }
     });
-
-    res.json({ retorno: "Clube deletado com sucesso!" });
+    //retorna mensagem de sucesso
+    return res.status(200).json({ retorno: "Categoria deletada com sucesso!" });
   },
 };
