@@ -2,6 +2,7 @@ const express = require('express');
 const ClubeController = require('../controllers/ClubeController');
 const AtletaController = require('../controllers/AtletaController');
 const CompeticaoController = require('../controllers/CompeticaoController');
+const CategoriaController = require('../controllers/CategoriaController');
 
 const routes = express.Router();
 
@@ -26,4 +27,12 @@ routes.delete('/atletas/:id', AtletaController.delete);
     //Rotas referentes a exportacao do xlsx 
     routes.get('/competicao/xlsx', CompeticaoController.gerarXLSX);
 
+//Rotas referentes a categoria
+    //Rotas referentes ao CRUD de categoria
+routes.get('/categoria', (req,res) => {
+    res.send({categoria: 'oi'}).status(200);
+});
+routes.post('/categoria', CategoriaController.store);
+routes.put('/categoria/:id', CategoriaController.update);
+routes.delete('/categoria/:id', CategoriaController.delete);
 module.exports = routes;

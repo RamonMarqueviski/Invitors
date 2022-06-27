@@ -4,8 +4,7 @@ const dbConfig = require('../config/database');
 const Clube = require('../models/Clube');
 const Atleta = require('../models/Atleta');
 const Competicoes = require('../models/Competicao');
-
-// console.log("ENV: " + );
+const Categoria = require("../models/Categoria");
 
 const connection = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
@@ -14,6 +13,8 @@ const connection = new Sequelize(process.env.DATABASE_URL, {
     },
   },
 });
+
+// const connection = new Sequelize(dbConfig);
 
 connection 
   .authenticate()
@@ -24,6 +25,7 @@ connection
 Clube.init(connection);
 Atleta.init(connection);
 Competicoes.init(connection);
+Categoria.init(connection);
 
 Clube.associate(connection.models);
 Atleta.associate(connection.models);

@@ -17,3 +17,5 @@ class Categorias extends Model{
     }
 
 }
+
+module.exports = Categorias;
