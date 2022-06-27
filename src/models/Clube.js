@@ -14,6 +14,7 @@ class Clubes extends Model {
 
   static associate(models){
     this.hasMany(models.Atletas, { foreignKey: 'clubeId', as: 'Atletas' })
+    this.hasMany(models.Usuarios, { foreignKey: 'clubeId', as: 'Usuarios' })
   }
 }
 

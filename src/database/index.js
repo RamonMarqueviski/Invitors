@@ -5,6 +5,7 @@ const Clube = require('../models/Clube');
 const Atleta = require('../models/Atleta');
 const Competicoes = require('../models/Competicao');
 const Categoria = require("../models/Categoria");
+const Usuarios = require('../models/Usuario');
 
 const connection = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
@@ -26,9 +27,11 @@ Clube.init(connection);
 Atleta.init(connection);
 Competicoes.init(connection);
 Categoria.init(connection);
+Usuarios.init(connection);
 
 Clube.associate(connection.models);
 Atleta.associate(connection.models);
 Competicoes.associate(connection.models);
+Usuarios.associate(connection.models);
 
 module.exports = connection;
