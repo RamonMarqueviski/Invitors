@@ -6,7 +6,7 @@ module.exports = {
       competicao_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'competicoes',key: 'id'},  
+        references: {model: 'Competicoes',key: 'id'},  
         nUpdate: 'CASCADE',//Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: 'CASCADE', //Sempre que o pai for deletado, os filhos tmb serão
         
@@ -14,14 +14,14 @@ module.exports = {
       atleta_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'atletas',key: 'id'},
+        references: {model: 'Atletas',key: 'id'},
         onUpdate: 'CASCADE',//Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: 'CASCADE', //Sempre que o pai for deletado, os filhos tmb serão
       },
       atleta_dupla_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'atletas',key: 'id'},
+        references: {model: 'Atletas',key: 'id'},
         onUpdate: 'CASCADE',//Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: 'CASCADE', //Sempre que o pai for deletado, os filhos tmb serão
         }

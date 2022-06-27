@@ -4,43 +4,43 @@ const Clubes = require('../models/Clube');
 module.exports = {
   async index(req, res){
 
-    const { clube_id } = req.body;
+    const { clubeId } = req.body;
 
-    if(!clube_id){
+    if(!clubeId){
       return res.status(400).json({
         error: 'Falta parâmetro'
       })
     }
 
-    const clube = await Clubes.findByPk(clube_id, {
-      include: { association: 'atletas' }
+    const clube = await Clubes.findByPk(clubeId, {
+      include: { association: 'Atletas' }
     });
 
     if(!clube){
       return res.status(400).json({ error: "Clube não encontrado"});
     }
-
-    return res.send(clube.atletas);
+    console.log(clube.Atletas);
+    return res.send(clube.Atletas).status(201);
   },
   async store(req, res) {
-    const { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id } = req.body;
+    const { cpf, nome, dataNascimento, sexo, foto, identificacao, clubeId } = req.body;
 
-    const clube = await Clubes.findByPk(clube_id);
+    const clube = await Clubes.findByPk(clubeId);
 
     if(!clube){
       return res.status(400).json({ error: 'Clube não encontrado!' });
     }
 
-    const atleta = await Atletas.create({ cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id });
+    const atleta = await Atletas.create({ cpf, nome, dataNascimento, sexo, foto, identificacao, clubeId });
 
     return res.json(atleta);
 
   },
   async update(req, res) {
-    const { cpf, nome, dataNascimento, sexo, foto, identificacao, clube_id } = req.body;
+    const { cpf, nome, dataNascimento, sexo, foto, identificacao, clubeId } = req.body;
     const { id } = req.params;
 
-    const verificaClube = await Atletas.findByPk(clube_id);
+    const verificaClube = await Atletas.findByPk(clubeId);
 
     if(!verificaAtleta){
       return res.status(400).json({ error: 'Atleta não encontrado!' });

@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('atletas', {
+    return queryInterface.createTable('Atletas', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,7 +12,7 @@ module.exports = {
       clubeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'clubes', key: 'id'},
+        references: { model: 'Clubes', key: 'id'},
         onUpdate: 'CASCADE',//Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: 'CASCADE', //Sempre que o pai for deletado, os filhos tmb serão
       },
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      data_nascimento: {
+      dataNascimento: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -53,7 +53,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     
-    return queryInterface.dropTable('atletas');
+    return queryInterface.dropTable('Atletas');
     
   }
 };

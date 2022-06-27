@@ -5,7 +5,7 @@ module.exports = {
     
     const clubes = await Clubes.findAll();
     if(!clubes){
-      return res.status(400).json({error: 'Se fodeo'})
+      return res.status(400).json({error: 'Nenhum clube encontrado'});
     }else{
       return res.json(clubes);
     }

@@ -7,19 +7,20 @@ module.exports = {
     res.json(competicao);
   },
   async store(req, res) {
-    const { nome, data_inicio, data_fim, data_prazo_inscricoes } = req.body;
+    const { nome, dataInicio, dataFim, dataPrazoInscricoes} =
+      req.body;
 
     const competicao = await Competicao.create({
       nome,
-      data_inicio,
-      data_fim,
-      data_prazo_inscricoes,
+      dataInicio,
+      dataFim,
+      dataPrazoInscricoes
     });
 
     return res.json(competicao);
   },
   async update(req, res) {
-    const { nome, data_inicio, data_fim, data_prazo_inscricoes } = req.body;
+    const { nome, dataInicio, dataFim, dataPrazoInscricoes } = req.body;
     const { id } = req.params;
 
     const verificaCompeticao = await Competicao.findByPk(id);
@@ -29,7 +30,7 @@ module.exports = {
     }
 
     await Competicao.update(
-      { nome, data_inicio, data_fim, data_prazo_inscricoes },
+      { nome, dataInicio, dataFim, dataPrazoInscricoes },
       { where: { id: id } }
     );
 

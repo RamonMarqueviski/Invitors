@@ -29,9 +29,7 @@ routes.delete('/atletas/:id', AtletaController.delete);
 
 //Rotas referentes a categoria
     //Rotas referentes ao CRUD de categoria
-routes.get('/categoria', (req,res) => {
-    res.send({categoria: 'oi'}).status(200);
-});
+routes.get('/categoria', CategoriaController.index);
 routes.post('/categoria', CategoriaController.store);
 routes.put('/categoria/:id', CategoriaController.update);
 routes.delete('/categoria/:id', CategoriaController.delete);

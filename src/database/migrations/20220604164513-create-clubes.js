@@ -2,33 +2,29 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('competicoes', {
-      id:{
+    return queryInterface.createTable('Clubes', {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      nome:{
+      cnpj : {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      dataInicio: {
-        type: Sequelize.DATE,
+      sigla: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      dataFim: {
-        type: Sequelize.DATE,
+      nome: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      dataPrazoInscricoes: {
-        type: Sequelize.DATE,
+      cidade: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      categoriaId:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },  
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -37,10 +33,12 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    })
+    });
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.dropTable('competicoes');
+    
+    return queryInterface.dropTable('Clubes');
+    
   }
 };

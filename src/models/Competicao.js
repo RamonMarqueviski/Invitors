@@ -4,9 +4,9 @@ class Competicoes extends Model {
   static init(sequelize) {
     super.init({
       nome: DataTypes.STRING,
-      data_inicio: DataTypes.DATE,
-      data_fim: DataTypes.DATE,
-      data_prazo_inscricoes: DataTypes.DATE,
+      dataInicio: DataTypes.DATE,
+      dataFim: DataTypes.DATE,
+      dataPrazoInscricoes: DataTypes.DATE,
       
     }, {
       sequelize
@@ -14,7 +14,7 @@ class Competicoes extends Model {
   }
 
   static associate(models){
-    this.belongsToMany(models.Atletas, { foreignKey: 'competicao_id', through: 'assoc_competicoes_atletas',as: 'atletas' });
+    this.belongsToMany(models.Atletas, { foreignKey: 'competicaoId', through: 'assoc_competicoes_atletas',as: 'atletas' });
     //falta associcação de categoria
 }
 }

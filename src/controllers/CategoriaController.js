@@ -1,12 +1,12 @@
-const Categoria = require("../models/Categoria");
+const Categorias = require("../models/Categoria");
 
 module.exports = {
   async index(req, res) {
-    const categoria = await Categoria.findAll();
-    if (!clubes) {
-      return res.status(400).json({ error: "Se fodeo" });
+    const categoria = await Categorias.findAll();
+    if (!categoria) {
+      return res.status(400).json({ error: "Nenhuma categoria encontrada" });
     } else {
-      return res.json(clubes);
+      return res.json(categoria);
     }
   },
   async store(req, res) {
