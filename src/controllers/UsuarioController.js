@@ -82,7 +82,7 @@ module.exports = {
     return res.json(usuario);
   },
   async indexPorClube(req, res) {
-    const { clubeId } = req.body;
+    const clubeId  = req.params.id;
     if (!clubeId) {
       return res.status(400).json({ error: "Falta parâmetro" });
     }

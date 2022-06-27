@@ -42,7 +42,7 @@ routes.post("/usuario", UsuarioController.store);
 routes.put("/usuario/:id", UsuarioController.update);
 routes.delete("/usuario/:id", UsuarioController.delete);
 //Busca index por Clube
-routes.get("/usuario/clube", UsuarioController.indexPorClube);
+routes.get("/usuario/clube/:id", UsuarioController.indexPorClube);
 //Rotas verifica login
 routes.post("/usuario/login", UsuarioController.login);
 
