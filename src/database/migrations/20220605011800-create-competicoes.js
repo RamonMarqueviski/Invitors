@@ -13,27 +13,27 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      data_inicio: {
+      dataInicio: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      data_fim: {
+      dataFim: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      data_prazo_inscricoes: {
+      dataPrazoInscricoes: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      // categoria_id:{
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false,
-      // },  
-      created_at: {
+      categoriaId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },  
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
