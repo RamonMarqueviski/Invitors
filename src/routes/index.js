@@ -14,7 +14,7 @@ routes.put("/clubes/:id", ClubeController.update);
 routes.delete("/clubes/:id", ClubeController.delete);
 
 //Rotas referentes a atletas
-routes.get("/atletas", AtletaController.index);
+routes.get("/atletas/:id", AtletaController.index);
 routes.post("/atletas", AtletaController.store);
 routes.put("/atletas/:id", AtletaController.update);
 routes.delete("/atletas/:id", AtletaController.delete);
@@ -44,6 +44,6 @@ routes.delete("/usuario/:id", UsuarioController.delete);
 //Busca index por Clube
 routes.get("/usuario/clube", UsuarioController.indexPorClube);
 //Rotas verifica login
-routes.get("/usuario/login", UsuarioController.login);
+routes.post("/usuario/login", UsuarioController.login);
 
 module.exports = routes;

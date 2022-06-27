@@ -4,7 +4,7 @@ const Clubes = require('../models/Clube');
 module.exports = {
   async index(req, res){
 
-    const { clubeId } = req.body;
+    const clubeId = req.params.id;
 
     if(!clubeId){
       return res.status(400).json({
