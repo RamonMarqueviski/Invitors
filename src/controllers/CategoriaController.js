@@ -1,4 +1,5 @@
 const Categorias = require("../models/Categoria");
+const Competicao = require("../models/Competicao");
 
 module.exports = {
   async index(req, res) {
@@ -18,7 +19,7 @@ module.exports = {
       descricao,
       isDupla,
       idadeMax,
-      idadeMin
+      idadeMin,
     });
     //retorna o objeto criado
     return res.json(categoria);
@@ -38,7 +39,7 @@ module.exports = {
         { nome, descricao, isDupla, idadeMax, idadeMin },
         { where: { id: id } }
       );
-       const categoriaAtualizado = await Categorias.findByPk(id);
+      const categoriaAtualizado = await Categorias.findByPk(id);
       //retorna o objeto atualizado
       return res.status(200).json(categoriaAtualizado);
     }
@@ -53,9 +54,52 @@ module.exports = {
     }
     //deleta a categoria
     await Categorias.destroy({
-      where: { id: id }
+      where: { id: id },
     });
     //retorna mensagem de sucesso
     return res.status(200).json({ retorno: "Categoria deletada com sucesso!" });
   },
+  async addCategoriaEmCompeticao(req, res) {
+    const { id, idCategoria } = req.params;
+    //Verifica se existe a competicao
+    const competicao = await Competicao.findByPk(id);
+    if (!competicao) {
+      return res.status(400).json({ error: "Competição não encontrada" });
+    }
+    //Verifica se existe a categoria
+    const categoria = await Categorias.findByPk(idCategoria);
+    if (!categoria) {
+      return res.status(400).json({ error: "Categoria não encontrada" });
+    }
+    //Adiciona a competicao a categoria
+    await competicao.addCategoria(categoria);
+    return res.status(200).json({ retorno: "Categoria adicionada com sucesso!" });
+  },
+  async removeCategoriaEmCompeticao(req, res) {
+    const { id, idCategoria } = req.params;
+    //Verifica se existe a competicao
+    const competicao = await Competicao.findByPk(id);
+    if (!competicao) {
+      return res.status(400).json({ error: "Competição não encontrada" });
+    }
+    //Verifica se existe a categoria
+    const categoria = await Categorias.findByPk(idCategoria);
+    if (!categoria) {
+      return res.status(400).json({ error: "Categoria não encontrada" });
+    }
+    //Remove a competicao a categoria
+    await competicao.removeCategoria(categoria);
+    return res.status(200).json({ retorno: "Categoria removida com sucesso!" });
+  },
+  async indexCategoriasEmCompeticao(req, res) {
+    const { id } = req.params;
+    //Verifica se existe a competicao
+    const competicao = await Competicao.findByPk(id);
+    if (!competicao) {
+      return res.status(400).json({ error: "Competição não encontrada" });
+    }
+    //Retorna as categorias da competicao
+    const categorias = await competicao.getCategorias();
+    return res.json(categorias);
+  }
 };

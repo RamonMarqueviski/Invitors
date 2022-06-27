@@ -34,7 +34,10 @@ routes.get("/categoria", CategoriaController.index);
 routes.post("/categoria", CategoriaController.store);
 routes.put("/categoria/:id", CategoriaController.update);
 routes.delete("/categoria/:id", CategoriaController.delete);
-
+//Crud uma categoria a uma competicao
+routes.post("/competicao/:id/categoria/:idCategoria", CategoriaController.addCategoriaEmCompeticao);
+routes.delete("/competicao/:id/categoria/:idCategoria", CategoriaController.removeCategoriaEmCompeticao);
+routes.get("/competicao/:id/categoria", CategoriaController.indexCategoriasEmCompeticao);
 //Rotas referentes a usuario
 //Rotas referentes ao CRUD de usuario
 routes.get("/usuario", UsuarioController.index);
@@ -45,5 +48,6 @@ routes.delete("/usuario/:id", UsuarioController.delete);
 routes.get("/usuario/clube/:id", UsuarioController.indexPorClube);
 //Rotas verifica login
 routes.post("/usuario/login", UsuarioController.login);
+
 
 module.exports = routes;

@@ -33,5 +33,6 @@ Clube.associate(connection.models);
 Atleta.associate(connection.models);
 Competicoes.associate(connection.models);
 Usuarios.associate(connection.models);
+Categoria.associate(connection.models);
 
 module.exports = connection;

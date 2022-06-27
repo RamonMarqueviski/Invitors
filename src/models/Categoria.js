@@ -12,9 +12,13 @@ class Categorias extends Model{
         }, { sequelize });
     }
 
-    // static associate(models) {
-    //     this.hasMany(models.Competicoes, { foreignKey: 'categoria_id', as: 'atletas' });
-    // }
+    static associate(models) {
+        this.belongsToMany(models.Competicoes, {
+          foreignKey: "categoriaId",
+          through: "assoc_categorias_competicoes",
+          as: "Competicoes",
+        });
+    }
 
 }
 
