@@ -7,7 +7,7 @@ const Competicoes = require("../models/Competicao");
 const Categoria = require("../models/Categoria");
 const Usuarios = require("../models/Usuario");
 const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
-const Status = require("../models/Status");
+const State = require("../models/State");
 
 const connection = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
@@ -30,7 +30,7 @@ Competicoes.init(connection);
 Categoria.init(connection);
 Usuarios.init(connection);
 CategoriasCompeticoes.init(connection);
-Status.init(connection);
+State.init(connection);
 
 Clube.associate(connection.models);
 Atleta.associate(connection.models);
@@ -38,6 +38,6 @@ Competicoes.associate(connection.models);
 Usuarios.associate(connection.models);
 Categoria.associate(connection.models);
 CategoriasCompeticoes.associate(connection.models);
-Status.associate(connection.models);
+State.associate(connection.models);
 
 module.exports = connection;
