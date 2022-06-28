@@ -4,7 +4,7 @@ const AtletaController = require("../controllers/AtletaController");
 const CompeticaoController = require("../controllers/CompeticaoController");
 const CategoriaController = require("../controllers/CategoriaController");
 const UsuarioController = require("../controllers/UsuarioController");
-const statusController = require("../controllers/StatusController");
+const StatusController = require("../controllers/StatusController");
 
 const routes = express.Router();
 
