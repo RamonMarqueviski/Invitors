@@ -16,7 +16,11 @@ class Atletas extends Model {
 
   static associate(models){
     this.belongsTo(models.Clubes, { foreignKey: 'clubeId', as: 'Clube' });
-    this.belongsToMany(models.Competicoes, { foreignKey: 'atletaId', through: 'assoc_competicoes_atletas',as: 'competicoes' })
+    this.belongsToMany(models.categoriasCompeticoes, {
+      foreignKey: "atletaId",
+      through: "categoriasCompeticoesAtletas",
+      as: "Atletas",
+    });
   }
 }
 

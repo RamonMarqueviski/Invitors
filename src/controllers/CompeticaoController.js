@@ -1,4 +1,8 @@
 const Competicao = require("../models/Competicao");
+const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
+const Atleta = require("../models/Atleta");
+const Categoria = require("../models/Categoria");
+
 const xl = require("excel4node");
 module.exports = {
   async index(req, res) {
@@ -7,14 +11,13 @@ module.exports = {
     res.json(competicao);
   },
   async store(req, res) {
-    const { nome, dataInicio, dataFim, dataPrazoInscricoes} =
-      req.body;
+    const { nome, dataInicio, dataFim, dataPrazoInscricoes } = req.body;
 
     const competicao = await Competicao.create({
       nome,
       dataInicio,
       dataFim,
-      dataPrazoInscricoes
+      dataPrazoInscricoes,
     });
 
     return res.json(competicao);
@@ -135,4 +138,91 @@ module.exports = {
     wb.write(`./ExcelReports/${name}.xlsx`);
     res.json({ retorno: "Excel gerado!" });
   },
-};
+
+  async inscreverAtleta(req, res) {
+    const { idCompeticao } = req.params;
+    const { idAtleta, idCategoria } = req.body;
+
+    //Verifica se existe atleta
+    const atleta = await Atleta.findByPk(idAtleta);
+    if (!atleta) {
+      return res.status(400).json({ error: "Atleta não encontrado!" });
+    }
+
+    //Verifica se existe categoria em competicao
+    const categoriaCompeticao = await CategoriasCompeticoes.findOne({
+      where: {
+        competicaoId: idCompeticao,
+        categoriaId: idCategoria,
+      },
+      attributes: ["id"],
+    });
+    console.log(categoriaCompeticao.id);
+
+
+    if (!categoriaCompeticao) {
+      return res
+        .status(400)
+        .json({ error: "Categoria não encontrada dentro da competição!" });
+    }
+    //inscrever atleta em uma competicao
+    categoriaCompeticao.addCategoriasCompeticoesAtleta(atleta);
+
+    return res.json({ retorno: "Atleta inscrito com sucesso!" });
+  },
+  async listarAtletasInscritosCompeticao(req, res) {
+    const { idCompeticao } = req.params;
+    const { idCategoria } = req.body;
+
+    //Verifica se existe competicao
+    const competicao = await Competicao.findByPk(idCompeticao);
+    if (!competicao) {
+      return res.status(400).json({ error: "Competição não encontrada!" });
+    }
+
+    //Verifica se existe categoria em competicao
+    const categoriaCompeticao = await CategoriasCompeticoes.findOne({
+      where: {
+        competicaoId: idCompeticao,
+        categoriaId: idCategoria,
+      },
+    });
+
+    if (!categoriaCompeticao) {
+      return res
+        .status(400)
+        .json({ error: "Categoria não encontrada dentro da competição!" });
+    }
+    const atletas = await categoriaCompeticao.getCategoriasCompeticoesAtletas();
+
+    return res.json(atletas);
+  },
+  async desinscreverAtleta() {
+    const { idCompeticao } = req.params;
+    const { idAtleta, idCategoria } = req.body;
+
+    //Verifica se existe atleta
+    const atleta = await Atleta.findByPk(idAtleta);
+    if (!atleta) {
+      return res.status(400).json({ error: "Atleta não encontrado!" });
+    }
+
+    //Verifica se existe categoria em competicao
+    const categoriaCompeticao = await CategoriasCompeticoes.findOne({
+      where: {
+        competicaoId: idCompeticao,
+        categoriaId: idCategoria,
+      },
+    });
+
+    if (!categoriaCompeticao) {
+      return res
+        .status(400)
+        .json({ error: "Categoria não encontrada dentro da competição!" });
+    }
+    //desinscrever atleta em uma competicao
+    categoriaCompeticao.removeCategoriasCompeticoesAtleta(atleta);
+
+    return res.json({ retorno: "Atleta desinscrito com sucesso!" });
+  }
+}

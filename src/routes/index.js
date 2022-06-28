@@ -4,6 +4,7 @@ const AtletaController = require("../controllers/AtletaController");
 const CompeticaoController = require("../controllers/CompeticaoController");
 const CategoriaController = require("../controllers/CategoriaController");
 const UsuarioController = require("../controllers/UsuarioController");
+const statusController = require("../controllers/StatusController");
 
 const routes = express.Router();
 
@@ -20,6 +21,19 @@ routes.put("/atletas/:id", AtletaController.update);
 routes.delete("/atletas/:id", AtletaController.delete);
 
 //Rotas referentes a competiçao
+//Rotas de inscrever atleta em competição
+routes.post(
+  "/competicoes/:idCompeticao/inscrever",
+  CompeticaoController.inscreverAtleta
+);
+//Rotas de desinscrever atleta em competição
+routes.delete("/competicoes/:idCompeticao/desinscrever", CompeticaoController.desinscreverAtleta);
+//Rotas de listar atletas inscritos em competição
+routes.get(
+  "/competicoes/:idCompeticao/atletas",
+  CompeticaoController.listarAtletasInscritosCompeticao
+);
+
 //Rotas referentes ao CRUD de competicao
 routes.get("/competicao", CompeticaoController.index);
 routes.post("/competicao", CompeticaoController.store);
@@ -35,19 +49,35 @@ routes.post("/categoria", CategoriaController.store);
 routes.put("/categoria/:id", CategoriaController.update);
 routes.delete("/categoria/:id", CategoriaController.delete);
 //Crud uma categoria a uma competicao
-routes.post("/competicao/:id/categoria/:idCategoria", CategoriaController.addCategoriaEmCompeticao);
-routes.delete("/competicao/:id/categoria/:idCategoria", CategoriaController.removeCategoriaEmCompeticao);
-routes.get("/competicao/:id/categoria", CategoriaController.indexCategoriasEmCompeticao);
+routes.post(
+  "/competicao/:id/categoria/:idCategoria",
+  CategoriaController.addCategoriaEmCompeticao
+);
+routes.delete(
+  "/competicao/:id/categoria/:idCategoria",
+  CategoriaController.removeCategoriaEmCompeticao
+);
+routes.get(
+  "/competicao/:id/categoria",
+  CategoriaController.indexCategoriasEmCompeticao
+);
+
 //Rotas referentes a usuario
 //Rotas referentes ao CRUD de usuario
 routes.get("/usuario", UsuarioController.index);
 routes.post("/usuario", UsuarioController.store);
 routes.put("/usuario/:id", UsuarioController.update);
 routes.delete("/usuario/:id", UsuarioController.delete);
+
 //Busca index por Clube
 routes.get("/usuario/clube/:id", UsuarioController.indexPorClube);
 //Rotas verifica login
 routes.post("/usuario/login", UsuarioController.login);
 
+//Rotas referentes ao CRUD de status
+routes.get("/status", StatusController.index);
+routes.post("/status", StatusController.store);
+routes.put("/status/:id", StatusController.update);
+routes.delete("/status/:id", StatusController.delete);
 
 module.exports = routes;

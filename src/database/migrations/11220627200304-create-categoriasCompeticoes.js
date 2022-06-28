@@ -1,32 +1,25 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    return queryInterface.createTable("assoc_competicoes_atletas", {
+  async up(queryInterface, Sequelize) {
+    return queryInterface.createTable("categoriasCompeticoes", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      competicao_id: {
+      competicaoId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: "Competicoes", key: "id" },
-        nUpdate: "CASCADE", //Sempre que há alguma alteração no pai, reflete no filho.
-        onDelete: "CASCADE", //Sempre que o pai for deletado, os filhos tmb serão
-      },
-      atleta_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "Atletas", key: "id" },
         onUpdate: "CASCADE", //Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: "CASCADE", //Sempre que o pai for deletado, os filhos tmb serão
       },
-      atleta_dupla_id: {
+      categoriaId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "Atletas", key: "id" },
+        references: { model: "Categorias", key: "id" },
         onUpdate: "CASCADE", //Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: "CASCADE", //Sempre que o pai for deletado, os filhos tmb serão
       },
@@ -41,7 +34,7 @@ module.exports = {
     });
   },
 
-  async down (queryInterface, Sequelize) {
-    return queryInterface.dropTable('assoc_competicoes_atletas');
-  }
+  async down(queryInterface, Sequelize) {
+    return queryInterface.dropTable("categoriasCompeticoes");
+  },
 };

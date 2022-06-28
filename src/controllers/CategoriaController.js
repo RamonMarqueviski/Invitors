@@ -59,6 +59,7 @@ module.exports = {
     //retorna mensagem de sucesso
     return res.status(200).json({ retorno: "Categoria deletada com sucesso!" });
   },
+  
   async addCategoriaEmCompeticao(req, res) {
     const { id, idCategoria } = req.params;
     //Verifica se existe a competicao
@@ -75,6 +76,7 @@ module.exports = {
     await competicao.addCategoria(categoria);
     return res.status(200).json({ retorno: "Categoria adicionada com sucesso!" });
   },
+
   async removeCategoriaEmCompeticao(req, res) {
     const { id, idCategoria } = req.params;
     //Verifica se existe a competicao
