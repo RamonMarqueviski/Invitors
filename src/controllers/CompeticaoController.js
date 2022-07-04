@@ -157,8 +157,6 @@ module.exports = {
       },
       attributes: ["id"],
     });
-    console.log(categoriaCompeticao.id);
-
 
     if (!categoriaCompeticao) {
       return res
@@ -171,8 +169,7 @@ module.exports = {
     return res.json({ retorno: "Atleta inscrito com sucesso!" });
   },
   async listarAtletasInscritosCompeticao(req, res) {
-    const { idCompeticao } = req.params;
-    const { idCategoria } = req.body;
+    const { idCompeticao,idCategoria } = req.params;
 
     //Verifica se existe competicao
     const competicao = await Competicao.findByPk(idCompeticao);

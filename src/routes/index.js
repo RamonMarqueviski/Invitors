@@ -30,7 +30,7 @@ routes.post(
 routes.delete("/competicoes/:idCompeticao/desinscrever", CompeticaoController.desinscreverAtleta);
 //Rotas de listar atletas inscritos em competição
 routes.get(
-  "/competicoes/:idCompeticao/atletas",
+  "/competicoes/:idCompeticao/categoria/:idCategoria/atletas",
   CompeticaoController.listarAtletasInscritosCompeticao
 );
 
