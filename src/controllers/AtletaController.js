@@ -2,6 +2,15 @@ const Atletas = require("../models/Atleta");
 const Clubes = require("../models/Clube");
 
 module.exports = {
+  async indexByCPF(req, res) {
+    const { cpf } = req.params;
+
+    const atleta = await Atletas.findOne({
+      where: { cpf },
+    });
+
+    return res.json(atleta);
+  },
   async index(req, res) {
     const clubeId = req.params.id;
 
