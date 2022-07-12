@@ -8,6 +8,8 @@ const Categoria = require("../models/Categoria");
 const Usuarios = require("../models/Usuario");
 const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
 const State = require("../models/State");
+const categoriasCompeticoesAtletas = require("../models/CategoriaCompeticaoAtletas");
+
 
 const connection = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
@@ -17,7 +19,7 @@ const connection = new Sequelize(process.env.DATABASE_URL, {
   },
 });
 
-// const connection = new Sequelize(dbConfig);
+// const connection = new Sequelize(dbConfig); 
 
 connection
   .authenticate()
@@ -31,6 +33,7 @@ Categoria.init(connection);
 Usuarios.init(connection);
 CategoriasCompeticoes.init(connection);
 State.init(connection);
+categoriasCompeticoesAtletas.init(connection);
 
 Clube.associate(connection.models);
 Atleta.associate(connection.models);
@@ -39,5 +42,6 @@ Usuarios.associate(connection.models);
 Categoria.associate(connection.models);
 CategoriasCompeticoes.associate(connection.models);
 State.associate(connection.models);
+categoriasCompeticoesAtletas.associate(connection.models);
 
 module.exports = connection;
