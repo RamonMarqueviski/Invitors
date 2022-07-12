@@ -2,6 +2,7 @@ const Competicao = require("../models/Competicao");
 const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
 const Atleta = require("../models/Atleta");
 const Categoria = require("../models/Categoria");
+const CategoriaCompeticaoAtletas = require("../models/CategoriaCompeticaoAtletas");
 
 const xl = require("excel4node");
 module.exports = {
@@ -141,7 +142,7 @@ module.exports = {
 
   async inscreverAtleta(req, res) {
     const { idCompeticao } = req.params;
-    const { idAtleta, idCategoria } = req.body;
+    const { idAtleta, idAtleta2, idCategoria } = req.body;
 
     //Verifica se existe atleta
     const atleta = await Atleta.findByPk(idAtleta);
@@ -166,10 +167,49 @@ module.exports = {
     //inscrever atleta em uma competicao
     categoriaCompeticao.addCategoriasCompeticoesAtleta(atleta);
 
-    return res.json({ retorno: "Atleta inscrito com sucesso!" });
+    //Verifica se a categoria eh em dupla
+    const categoria = await Categoria.findByPk(idCategoria);
+    if (categoria.dupla == "dupla" || categoria.dupla == "mista") {
+      //Verifica se existe atleta2
+      if (!idAtleta2) {
+        return res
+          .status(400)
+          .json({ error: "Atleta 2 precisa ser informado!" });
+      }
+      if (idAtleta2 == idAtleta) {
+        return res
+          .status(400)
+          .json({ error: "Atleta 2 precisa ser diferente que atleta 1!" });
+      }
+      const atleta2 = await Atleta.findByPk(idAtleta2);
+      if (!atleta2) {
+        return res.status(400).json({ error: "Atleta não encontrado!" });
+      }
+
+      const categoriaCompeticaoAtleta =
+        await CategoriaCompeticaoAtletas.findOne({
+          where: {
+            atletaId: idAtleta,
+            id: categoriaCompeticao.id,
+          },
+        });
+
+      //Verifica se existe a categoriaCompeticaoAtleta
+
+      if (!categoriaCompeticaoAtleta) {
+        return res.status(400).json({ error: "Erro interno" });
+      }
+      await CategoriaCompeticaoAtletas.update(
+        { atletaId2: idAtleta2 },
+        { where: { id: categoriaCompeticaoAtleta.id } }
+      );
+      return res.json({ retorno: "Atletas inscritos com sucesso!" });
+    } else {
+      return res.json({ retorno: "Atleta inscrito com sucesso!" });
+    }
   },
   async listarAtletasInscritosCompeticao(req, res) {
-    const { idCompeticao,idCategoria } = req.params;
+    const { idCompeticao, idCategoria } = req.params;
 
     //Verifica se existe competicao
     const competicao = await Competicao.findByPk(idCompeticao);
@@ -221,5 +261,5 @@ module.exports = {
     categoriaCompeticao.removeCategoriasCompeticoesAtleta(atleta);
 
     return res.json({ retorno: "Atleta desinscrito com sucesso!" });
-  }
-}
+  },
+};

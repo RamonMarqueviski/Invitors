@@ -12,12 +12,12 @@ module.exports = {
   },
   async store(req, res) {
     //pega do body o nome, descricao, isDupla, idadeMax, idadeMin
-    const { nome, descricao, isDupla, idadeMax, idadeMin } = req.body;
+    const { nome, descricao, dupla, idadeMax, idadeMin } = req.body;
     //cria um novo objeto com os dados do body
     const categoria = await Categorias.create({
       nome,
       descricao,
-      isDupla,
+      dupla,
       idadeMax,
       idadeMin,
     });

@@ -17,9 +17,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isDupla: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
+      dupla: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       idadeMax: {
         type: Sequelize.STRING,

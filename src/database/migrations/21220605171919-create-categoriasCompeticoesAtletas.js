@@ -23,6 +23,13 @@ module.exports = {
         onUpdate: "CASCADE", //Sempre que há alguma alteração no pai, reflete no filho.
         onDelete: "CASCADE", //Sempre que o pai for deletado, os filhos tmb serão
       },
+      atletaId2: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: "Atletas", key: "id" },
+        onUpdate: "CASCADE", //Sempre que há alguma alteração no pai, reflete no filho.
+        onDelete: "CASCADE", //Sempre que o pai for deletado, os filhos tmb serão
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

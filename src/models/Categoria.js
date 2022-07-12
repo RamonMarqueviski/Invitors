@@ -6,7 +6,7 @@ class Categorias extends Model{
         super.init({
             nome: DataTypes.STRING,
             descricao: DataTypes.STRING,
-            isDupla: DataTypes.BOOLEAN,
+            dupla: DataTypes.STRING,
             idadeMax: DataTypes.INTEGER,
             idadeMin: DataTypes.INTEGER,
         }, { sequelize });
