@@ -51,7 +51,7 @@ routes.put("/categoria/:id", CategoriaController.update);
 routes.delete("/categoria/:id", CategoriaController.delete);
 //Crud uma categoria a uma competicao
 routes.post(
-  "/competicao/:id/categoria/:idCategoria",
+  "/competicao/:id/categoria",
   CategoriaController.addCategoriaEmCompeticao
 );
 routes.delete(

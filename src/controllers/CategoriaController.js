@@ -59,22 +59,27 @@ module.exports = {
     //retorna mensagem de sucesso
     return res.status(200).json({ retorno: "Categoria deletada com sucesso!" });
   },
-  
+
   async addCategoriaEmCompeticao(req, res) {
-    const { id, idCategoria } = req.params;
-    //Verifica se existe a competicao
-    const competicao = await Competicao.findByPk(id);
-    if (!competicao) {
-      return res.status(400).json({ error: "Competição não encontrada" });
+    const { id } = req.params;
+    const { idCategoria } = req.body;
+    for (let i = 0; i < idCategoria.length; i++) {
+      //Verifica se existe a competicao
+      const competicao = await Competicao.findByPk(id);
+      if (!competicao) {
+        return res.status(400).json({ error: "Competição não encontrada" });
+      }
+      //Verifica se existe a categoria
+      const categoria = await Categorias.findByPk(idCategoria[i]);
+      if (!categoria) {
+        return res.status(400).json({ error: "Categoria não encontrada" });
+      }
+      //Adiciona a competicao a categoria
+      await competicao.addCategoria(categoria);
     }
-    //Verifica se existe a categoria
-    const categoria = await Categorias.findByPk(idCategoria);
-    if (!categoria) {
-      return res.status(400).json({ error: "Categoria não encontrada" });
-    }
-    //Adiciona a competicao a categoria
-    await competicao.addCategoria(categoria);
-    return res.status(200).json({ retorno: "Categoria adicionada com sucesso!" });
+    return res
+      .status(200)
+      .json({ retorno: "Categoria adicionada com sucesso!" });
   },
 
   async removeCategoriaEmCompeticao(req, res) {
@@ -103,5 +108,5 @@ module.exports = {
     //Retorna as categorias da competicao
     const categorias = await competicao.getCategorias();
     return res.json(categorias);
-  }
+  },
 };
