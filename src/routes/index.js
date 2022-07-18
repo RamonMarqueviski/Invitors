@@ -20,6 +20,7 @@ routes.get("/atletas/cpf/:cpf", AtletaController.indexByCPF);
 routes.post("/atletas", AtletaController.store);
 routes.put("/atletas/:id", AtletaController.update);
 routes.delete("/atletas/:id", AtletaController.delete);
+routes.get("/atletas/id/:id", AtletaController.indexById);
 
 //Rotas referentes a competiçao
 //Rotas de inscrever atleta em competição
