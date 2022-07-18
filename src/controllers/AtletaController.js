@@ -11,6 +11,20 @@ module.exports = {
 
     return res.json(atleta);
   },
+  async indexById(req, res) {
+    const { id } = req.params;
+
+    const atleta = await Atletas.findOne({
+      where: { id },
+    });
+
+    if (!atleta) {
+      return res.status(400).json({ error: "Atleta não encontrado" });
+    }
+
+    return res.json(atleta);
+  },
+
   async index(req, res) {
     const clubeId = req.params.id;
 
