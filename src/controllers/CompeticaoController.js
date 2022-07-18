@@ -170,8 +170,9 @@ module.exports = {
     //Verifica se a categoria eh em dupla
     const categoria = await Categoria.findByPk(idCategoria);
     if (
-      categoria.dupla != "Individual Feminino" ||
-      categoria.dupla != "Individual Masculino"
+      categoria.dupla == "Dupla mista" ||
+      categoria.dupla == "Dupla feminina" ||
+      categoria.dupla == "Dupla masculina"
     ) {
       //Verifica se existe atleta2
       if (!idAtleta2) {
