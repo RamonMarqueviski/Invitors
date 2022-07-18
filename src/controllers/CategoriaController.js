@@ -26,7 +26,7 @@ module.exports = {
   },
   async update(req, res) {
     //pega do body o nome, descricao, isDupla, idadeMax, idadeMin
-    const { nome, descricao, isDupla, idadeMax, idadeMin } = req.body;
+    const { nome, descricao, dupla, idadeMax, idadeMin } = req.body;
     //pega do params o id
     const { id } = req.params;
     //verifica se existe a categoria
@@ -36,7 +36,7 @@ module.exports = {
     } else {
       //atualiza o objeto
       await Categorias.update(
-        { nome, descricao, isDupla, idadeMax, idadeMin },
+        { nome, descricao, dupla, idadeMax, idadeMin },
         { where: { id: id } }
       );
       const categoriaAtualizado = await Categorias.findByPk(id);
