@@ -147,6 +147,7 @@ module.exports = {
 
     //Verifica se existe atleta
     const atleta = await Atleta.findByPk(idAtleta);
+
     if (!atleta) {
       return res.status(400).json({ error: "Atleta não encontrado!" });
     }
@@ -195,14 +196,21 @@ module.exports = {
         await CategoriaCompeticaoAtletas.findOne({
           where: {
             atletaId: idAtleta,
-            id: idCategoria,
+            id: categoriaCompeticao.id,
           },
         });
 
+        console.log(categoriaCompeticao)
       //Verifica se existe a categoriaCompeticaoAtleta
 
       if (!categoriaCompeticaoAtleta) {
-        return res.status(400).json({ error: "Não encontrado competição com a categoria e o atletia 1 informados (ERRO INTERNO)" });
+        console.log(categoriaCompeticaoAtleta);
+        return res
+          .status(400)
+          .json({
+            error:
+              "Não encontrado competição com a categoria e o atletia 1 informados (ERRO INTERNO)",
+          });
       }
       await CategoriaCompeticaoAtletas.update(
         { atletaId2: idAtleta2 },
