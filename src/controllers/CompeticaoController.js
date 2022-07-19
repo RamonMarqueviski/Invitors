@@ -3,6 +3,8 @@ const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
 const Atleta = require("../models/Atleta");
 const Categoria = require("../models/Categoria");
 const CategoriaCompeticaoAtletas = require("../models/CategoriaCompeticaoAtletas");
+const Sequelize = require("sequelize");
+//const sequelize = require("../database");
 const moment = require("moment");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
