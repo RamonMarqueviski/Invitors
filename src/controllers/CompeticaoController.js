@@ -197,7 +197,7 @@ module.exports = {
         await CategoriaCompeticaoAtletas.findOne({
           where: {
             atletaId: idAtleta,
-            id: categoriaCompeticao.id,
+            categoriasCompeticoesId: categoriaCompeticao.id,
           },
         });
 
