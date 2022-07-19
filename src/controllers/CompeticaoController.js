@@ -191,19 +191,19 @@ module.exports = {
         return res.status(400).json({ error: "Atleta não encontrado!" });
       }
 
-      // const categoriaCompeticaoAtleta =
-      //   await CategoriaCompeticaoAtletas.findOne({
-      //     where: {
-      //      // atletaId: idAtleta,
-      //       id: categoriaCompeticao.id,
-      //     },
-      //   });
+      const categoriaCompeticaoAtleta =
+        await CategoriaCompeticaoAtletas.findOne({
+          where: {
+            atletaId: idAtleta,
+            id: idCategoria,
+          },
+        });
 
       //Verifica se existe a categoriaCompeticaoAtleta
 
-      // if (!categoriaCompeticaoAtleta) {
-      //   return res.status(400).json({ error: "Erro interno" });
-      // }
+      if (!categoriaCompeticaoAtleta) {
+        return res.status(400).json({ error: "Não encontrado competição com a categoria e o atletia 1 informados (ERRO INTERNO)" });
+      }
       await CategoriaCompeticaoAtletas.update(
         { atletaId2: idAtleta2 },
         { where: { id: categoriaCompeticaoAtleta.id } }
