@@ -200,17 +200,15 @@ module.exports = {
           },
         });
 
-        console.log(categoriaCompeticao)
       //Verifica se existe a categoriaCompeticaoAtleta
 
       if (!categoriaCompeticaoAtleta) {
         console.log(categoriaCompeticaoAtleta);
-        return res
-          .status(400)
-          .json({
-            error:
-              "Não encontrado competição com a categoria e o atletia 1 informados (ERRO INTERNO)",
-          });
+        return res.status(400).json({
+          error:
+            "Não encontrado competição com a categoria e o atletia 1 informados (ERRO INTERNO)" +
+            categoriaCompeticao,
+        });
       }
       await CategoriaCompeticaoAtletas.update(
         { atletaId2: idAtleta2 },
