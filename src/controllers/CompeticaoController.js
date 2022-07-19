@@ -5,6 +5,7 @@ const Categoria = require("../models/Categoria");
 const CategoriaCompeticaoAtletas = require("../models/CategoriaCompeticaoAtletas");
 
 const xl = require("excel4node");
+const { indexById } = require("./AtletaController");
 module.exports = {
   async index(req, res) {
     const competicao = await Competicao.findAll();
@@ -72,35 +73,7 @@ module.exports = {
 
     //Busca no banco para retorno -- fazer
 
-    const data = [
-      {
-        Name: "Ramon Vinicius Marqueviski",
-        "Member id": "000001",
-        Event: "SMSenior",
-        "Partner id": "123123123",
-        DoB: "04/04/2001",
-        Paid: "R$ 30,00",
-        Club: "Furiacao",
-      },
-      {
-        Name: "Afonso",
-        "Member id": "000002",
-        Event: "SMSenior",
-        "Partner id": "123123123",
-        DoB: "04/04/2001",
-        Paid: "R$ 30,00",
-        Club: "Furiacao",
-      },
-      {
-        Name: "Joao Elias",
-        "Member id": "000003",
-        Event: "SMSenior",
-        "Partner id": "123123123",
-        DoB: "04/04/2001",
-        Paid: "R$ 30,00",
-        Club: "Furiacao",
-      },
-    ];
+    const data = []
 
     //Titulos da planilha
 
@@ -136,8 +109,9 @@ module.exports = {
     });
 
     let name = "Competicao_Blast";
-    wb.write(`./ExcelReports/${name}.xlsx`);
-    res.json({ retorno: "Excel gerado!" });
+    wb.write(`./src/ExcelReports/${name}.xlsx`);
+    res.download(`./src/ExcelReports/Competicao_Blast.xlsx`);
+   // res.json({ retorno: "Excel gerado!" });
   },
 
   async inscreverAtleta(req, res) {
