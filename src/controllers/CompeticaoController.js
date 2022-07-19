@@ -3,6 +3,15 @@ const CategoriasCompeticoes = require("../models/CategoriaCompeticao");
 const Atleta = require("../models/Atleta");
 const Categoria = require("../models/Categoria");
 const CategoriaCompeticaoAtletas = require("../models/CategoriaCompeticaoAtletas");
+// const sequelize = require("../database");
+const moment = require("moment");
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
+});
 
 const xl = require("excel4node");
 const { indexById } = require("./AtletaController");
@@ -59,59 +68,77 @@ module.exports = {
   async gerarXLSX(req, res) {
     //validacao se existe competicao
 
-    // const { id } = req.params;
-    //  const competicao = await Competicao.findByPk(id);
+    const { id } = req.params;
+    const competicao = await Competicao.findByPk(id);
 
-    // if (!competicao) {
-    //   res.status(400).json({ error: "Competição não encontrada" });
-    // }
+    if (!competicao) {
+      res.status(400).json({ error: "Competição não encontrada" });
+    } else {
+      //Criacao do Workbook
+      const wb = new xl.Workbook();
+      //nome para a planilha
+      const ws = wb.addWorksheet("Nome da planilha");
 
-    //Criacao do Workbook
-    const wb = new xl.Workbook();
-    //nome para a planilha
-    const ws = wb.addWorksheet("Nome da planilha");
+      //Busca no banco para retorno
+      const [results, metadata] = await sequelize.query(
+        'select a."nome" as name,a."cpf" as MemberId,cat."nome" as Event,(select "cpf" as cpf2 from "Atletas" where id = cca."atletaId2") as PartnerId, a."dataNascimento" as DoB ,null as Paid,(select "nome" from "Clubes" where id = a."clubeId") as Club  from "categoriasCompeticoes" cc ' +
+          'inner join "Competicoes" c ' +
+          'on cc."competicaoId" =  c."id" ' +
+          'inner join "Categorias" cat ' +
+          'on cc."categoriaId" = cat.id ' +
+          'inner join "categoriasCompeticoesAtletas" cca ' +
+          'on cca."categoriasCompeticoesId" = cc.id ' +
+          'inner join "Atletas" a ' +
+          'on a.id = cca."atletaId" ' +
+          'inner join "Clubes" clu ' +
+          'on clu.id = a."clubeId" ' +
+          'where c."id" =' +
+          id
+      );
 
-    //Busca no banco para retorno -- fazer
+      const data = results;
 
-    const data = []
+      //Titulos da planilha
 
-    //Titulos da planilha
+      for (let i = 0; i < data.length; i++) {
+        let date = moment(data[i].dob).format("DD-MM-YYYY");
+        data[i].dob = date;
+      }
+      const nome = competicao.nome + "-" + competicao.id;
+      const headingColumnsNames = [
+        "Name",
+        "Member id",
+        "Event",
+        "Partner id",
+        "DoB",
+        "Paid",
+        "Club",
+      ];
+      //Define o inicio das colunas
+      let headingColumnIndex = 1;
 
-    const headingColumnsNames = [
-      "Name",
-      "Member id",
-      "Event",
-      "Partner id",
-      "DoB",
-      "Paid",
-      "Club",
-    ];
-    //Define o inicio das colunas
-    let headingColumnIndex = 1;
-
-    //Monta o header
-    headingColumnsNames.forEach((heading) => {
-      ws.cell(1, headingColumnIndex++).string(heading);
-    });
-
-    //Montando o body
-
-    //Define o inicio da linha
-    let rowIndex = 2;
-
-    //Monta o body passando pelo array de objetos
-    data.forEach((record) => {
-      let ColumnIndex = 1;
-      Object.keys(record).forEach((columnName) => {
-        ws.cell(rowIndex, ColumnIndex++).string(record[columnName]);
+      //Monta o header
+      headingColumnsNames.forEach((heading) => {
+        ws.cell(1, headingColumnIndex++).string(heading);
       });
-      rowIndex++;
-    });
 
-    let name = "Competicao_Blast";
-    wb.write(`./src/ExcelReports/${name}.xlsx`);
-    res.download(`./src/ExcelReports/Competicao_Blast.xlsx`);
-   // res.json({ retorno: "Excel gerado!" });
+      //Montando o body
+
+      //Define o inicio da linha
+      let rowIndex = 2;
+
+      //Monta o body passando pelo array de objetos
+      data.forEach((record) => {
+        let ColumnIndex = 1;
+        Object.keys(record).forEach((columnName) => {
+          ws.cell(rowIndex, ColumnIndex++).string(record[columnName]);
+        });
+        rowIndex++;
+      });
+      wb.write(`./src/ExcelReports/${nome}.xlsx`);
+
+      res.download(`./src/ExcelReports/${nome}.xlsx`);
+    }
   },
 
   async inscreverAtleta(req, res) {

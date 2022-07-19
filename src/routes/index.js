@@ -42,7 +42,7 @@ routes.post("/competicao", CompeticaoController.store);
 routes.put("/competicao/:id", CompeticaoController.update);
 routes.delete("/competicao/:id", CompeticaoController.delete);
 //Rotas referentes a exportacao do xlsx
-routes.get("/competicao/xlsx", CompeticaoController.gerarXLSX);
+routes.get("/competicao/:id/xlsx", CompeticaoController.gerarXLSX);
 
 //Rotas referentes a categoria
 //Rotas referentes ao CRUD de categoria
