@@ -11,6 +11,7 @@ class categoriasCompeticoes extends Model {
         },
         categoriaId: DataTypes.INTEGER,
         competicaoId: DataTypes.INTEGER,
+        paid: DataTypes.FLOAT
      },
       { sequelize }
     );

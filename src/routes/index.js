@@ -56,6 +56,10 @@ routes.post(
   "/competicao/:id/categoria",
   CategoriaController.addCategoriaEmCompeticao
 );
+routes.put(
+  "/competicao/:idCompeticao/categoria/:idCategoria",
+  CategoriaController.addPaidCategoriaCompeticao
+);
 routes.delete(
   "/competicao/:id/categoria/:idCategoria",
   CategoriaController.removeCategoriaEmCompeticao
