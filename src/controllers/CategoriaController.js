@@ -20,14 +20,14 @@ module.exports = {
       dupla,
       idadeMax,
       idadeMin,
-      paid
+      paid,
     });
     //retorna o objeto criado
     return res.json(categoria);
   },
   async update(req, res) {
     //pega do body o nome, descricao, isDupla, idadeMax, idadeMin
-    const { nome, descricao, dupla, idadeMax, idadeMin } = req.body;
+    const { nome, descricao, dupla, idadeMax, idadeMin, paid } = req.body;
     //pega do params o id
     const { id } = req.params;
     //verifica se existe a categoria
@@ -37,7 +37,7 @@ module.exports = {
     } else {
       //atualiza o objeto
       await Categorias.update(
-        { nome, descricao, dupla, idadeMax, idadeMin },
+        { nome, descricao, dupla, idadeMax, idadeMin, paid },
         { where: { id: id } }
       );
       const categoriaAtualizado = await Categorias.findByPk(id);
