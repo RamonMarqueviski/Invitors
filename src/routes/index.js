@@ -15,7 +15,6 @@ routes.put("/clubes/:id", ClubeController.update);
 routes.delete("/clubes/:id", ClubeController.delete);
 
 //Rotas referentes a atletas
-routes.get("/atletas", AtletaController.todos);
 routes.get("/atletas/:id", AtletaController.index);
 routes.get("/atletas/cpf/:cpf", AtletaController.indexByCPF);
 routes.post("/atletas", AtletaController.store);
