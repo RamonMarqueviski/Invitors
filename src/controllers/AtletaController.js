@@ -2,6 +2,14 @@ const Atletas = require("../models/Atleta");
 const Clubes = require("../models/Clube");
 
 module.exports = {
+  async indexAtletas(req, res) {
+    const atletas = await Atletas.findAll();
+    if (!atletas) {
+      return res.status(400).json({ error: "Nenhum atleta encontrado" });
+    } else {
+      return res.json(atletas);
+    }
+  },
   async indexByCPF(req, res) {
     const { cpf } = req.params;
 
