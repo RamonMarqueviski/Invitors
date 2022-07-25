@@ -9,6 +9,7 @@ class Categorias extends Model{
             dupla: DataTypes.STRING,
             idadeMax: DataTypes.INTEGER,
             idadeMin: DataTypes.INTEGER,
+            paid: DataTypes.FLOAT,
         }, { sequelize });
     }
 
