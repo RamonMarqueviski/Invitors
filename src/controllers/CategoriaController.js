@@ -1,5 +1,4 @@
 const Categorias = require("../models/Categoria");
-const categoriasCompeticoes = require("../models/CategoriaCompeticao");
 const Competicao = require("../models/Competicao");
 
 module.exports = {
@@ -60,29 +59,7 @@ module.exports = {
     //retorna mensagem de sucesso
     return res.status(200).json({ retorno: "Categoria deletada com sucesso!" });
   },
-  async addPaidCategoriaCompeticao(req, res) {
-    const { idCategoria, idCompeticao } = req.params;
-    const { paid } = req.body;
 
-    const categoria = await Categorias.findByPk(idCategoria);
-    if (!categoria) {
-      return res.status(400).json({ error: "Categoria não encontrada" });
-    }
-
-    const competicao = await Competicao.findByPk(idCompeticao);
-    if (!competicao) {
-      return res.status(400).json({ error: "Competição não encontrada" });
-    }
-
-    if (!paid || paid <= 0) {
-      return res.status(400).json({ error: "Paid inválido" });
-    }
-    categoriasCompeticoes.update(
-      { paid },
-      { where: { categoriaId:idCategoria, competicaoId: idCompeticao } }
-    );
-    return res.status(200).json({ retorno: "Paid atualizado com sucesso!" });
-  },
   async addCategoriaEmCompeticao(req, res) {
     const { id } = req.params;
     const { idCategoria } = req.body;

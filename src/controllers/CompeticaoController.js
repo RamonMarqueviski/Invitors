@@ -81,7 +81,7 @@ module.exports = {
 
       //Busca no banco para retorno
       const [results, metadata] = await sequelize.query(
-        'select a."nome" as name,a."cpf" as MemberId,cat."nome" as Event,(select "cpf" as cpf2 from "Atletas" where id = cca."atletaId2") as PartnerId, a."dataNascimento" as DoB,cc."paid" as Paid,(select "nome" from "Clubes" where id = a."clubeId") as Club  from "categoriasCompeticoes" cc ' +
+        'select a."nome" as name,a."cpf" as MemberId,cat."nome" as Event,(select "cpf" as cpf2 from "Atletas" where id = cca."atletaId2") as PartnerId, a."dataNascimento" as DoB ,null as Paid,(select "nome" from "Clubes" where id = a."clubeId") as Club  from "categoriasCompeticoes" cc ' +
           'inner join "Competicoes" c ' +
           'on cc."competicaoId" =  c."id" ' +
           'inner join "Categorias" cat ' +
@@ -104,9 +104,6 @@ module.exports = {
         let date = moment(data[i].dob).format("DD-MM-YYYY");
         data[i].dob = date;
       }
-       for (let i = 0; i < data.length; i++) {
-         data[i].paid = data[i].paid.toString();
-       }
       const nome = competicao.nome + "-" + competicao.id;
       const headingColumnsNames = [
         "Name",
